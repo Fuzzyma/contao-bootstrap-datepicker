@@ -1,5 +1,5 @@
 {
-    "name":"fuzzyma/contao-bootstrap-datepicker",
+    "name":"fuzzyma/contao-datepicker-bootstrap",
     "description":"Frontend Text Field with Bootstrap Datepicker for Contao Open Source CMS",
     "keywords":["contao", "Calendar", "Calendar Field", "Datepicker"],
     "type":"contao-module",
