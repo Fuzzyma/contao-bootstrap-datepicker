@@ -27,7 +27,7 @@
  */
 
 
-class FormDatePickerField extends FormTextField
+class FormDatepickerField extends FormTextField
 {
     /**
      * Template
@@ -43,16 +43,30 @@ class FormDatePickerField extends FormTextField
         if ($this->rgxp != 'datim' && $this->rgxp != 'time') {
             $this->rgxp = 'date';
         }
-    }
 
-    public function generate()
-    {
         if (!$this->dateExcludeCSS) {
-            $GLOBALS['TL_CSS'][] = 'vendor/eternicode/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
+            $GLOBALS['TL_CSS'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
         }
 
-        $GLOBALS['TL_JAVASCRIPT'][] = 'vendor/eternicode/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js';
+        if (TL_MODE == 'BE')
+        {
+            if (!is_array($GLOBALS['TL_JAVASCRIPT']))
+            {
+                $GLOBALS['TL_JAVASCRIPT'] = array();
+            }
+            array_unshift($GLOBALS['TL_JAVASCRIPT'], 'system/modules/bootstrap-datepicker/assets/jquery.noconflict.js');
+            $jquery_src = 'assets/jquery/core/' . reset((scandir(TL_ROOT . '/assets/jquery/core', 1))) . '/jquery.min.js';
+            array_unshift($GLOBALS['TL_JAVASCRIPT'], $jquery_src);
+        }
+        
+        $GLOBALS['TL_JAVASCRIPT'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js';
+        $GLOBALS['TL_JAVASCRIPT'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/locales/bootstrap-datepicker.de.min.js';
 
+    }
+
+    /* Generate is NEVER called. You may call it in your template to return the html markup for the field. */
+    public function generate()
+    {
         /*$dateFormat = $this->dateFormat ?: $GLOBALS['TL_CONFIG'][$this->rgxp . 'Format'];
         $dateDirection = $this->dateDirection ?: '0';
         $jsEvent = $this->jsevent ?: 'domready';
@@ -153,16 +167,16 @@ class FormDatePickerField extends FormTextField
 
         // correctly style the date format
         $arrConfig['format'] = "'" . Date::formatToJs($dateFormat) . "'";
-
+*/
         // HOOK: allow to customize the date picker
-        if (isset($GLOBALS['TL_HOOKS']['formCalendarField']) && is_array($GLOBALS['TL_HOOKS']['formCalendarField'])) {
-            foreach ($GLOBALS['TL_HOOKS']['formCalendarField'] as $callback) {
+        if (isset($GLOBALS['TL_HOOKS']['formDatepickerField']) && is_array($GLOBALS['TL_HOOKS']['formDatepickerField'])) {
+            foreach ($GLOBALS['TL_HOOKS']['formDatepickerField'] as $callback) {
                 $objCallback = (method_exists($callback[0], 'getInstance') ? call_user_func(array($callback[0], 'getInstance')) : new $callback[0]());
                 $arrConfig = $objCallback->$callback[1]($arrConfig, $this);
             }
         }
 
-
+/*
         $arrCompiledConfig = array();
         foreach ($arrConfig as $k => $v) {
             $arrCompiledConfig[] = "    '" . $k . "': " . $v;
@@ -179,10 +193,10 @@ window.addEvent('" . $jsEvent . "', function() {
 */
         return $strBuffer;
     }
-/*
+
     public function validator($varInput)
     {
-        $objToday = new Date();
+        /*$objToday = new Date();
 
         $intTstamp = 0;
         $dateFormat = $this->dateFormat ?: $GLOBALS['TL_CONFIG'][$this->rgxp . 'Format'];
@@ -231,10 +245,10 @@ window.addEvent('" . $jsEvent . "', function() {
                     }
                     break;
             }
-        }
+        }*/
 
         return parent::validator($varInput);
-    }*/
+    }
 
 
     /**

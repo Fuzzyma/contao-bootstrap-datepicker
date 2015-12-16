@@ -30,5 +30,5 @@
 /**
  * Extension folder
  */
-$GLOBALS['TL_LANG']['MOD']['calendarfield'] = array('Calendar field', 'ein Feld dass die von TYPOlight bekannte Kalender-Auswahl im Frontend anzeigt.');
+$GLOBALS['TL_LANG']['MOD']['datepicker'] = array('Date Picker', 'Displays a datepicker field');
 

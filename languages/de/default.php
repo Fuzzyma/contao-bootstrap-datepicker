@@ -30,4 +30,4 @@
 /**
  * Form fields
  */
-$GLOBALS['TL_LANG']['FFL']['datepicker'] = array('Kalenderfeld', 'ein Feld dass die von TYPOlight bekannte Kalender-Auswahl im Frontend anzeigt.');
+$GLOBALS['TL_LANG']['FFL']['datepicker'] = array('Datumsauswahl', 'Zeigt einen Kalender an, mit dem ein Datum ausgewählt werden kann');

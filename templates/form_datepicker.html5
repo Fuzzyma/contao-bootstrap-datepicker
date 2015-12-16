@@ -17,23 +17,11 @@
     <p class="error"><?= $this->getErrorAsString() ?></p>
   <?php endif; ?>
   
-  <input
-    data-show-clear="0"
-    data-show-caption="0"
-    name="<?= $this->name ?>"
-    class="rating <?= $this->class ?>"
-    id="ctrl_<?= $this->id ?>"
-    type="number"
-    min="0"
-    max="5"
-    step="1"
-    <?= $this->getAttributes() ?> />
-    
-  <div class="input-group date" data-provide="datepicker" data-date-start-date="-3d">
+  <div class="input-group date" data-provide="datepicker" data-date-start-date="-3d" data-date-language="de">
     <input type="text" class="form-control">
-    <div class="input-group-addon">
+    <span class="input-group-addon">
         <span class="glyphicon glyphicon-th"></span>
-    </div>
+    </span>
   </div>
 
   <?php if ($this->addSubmit): ?>

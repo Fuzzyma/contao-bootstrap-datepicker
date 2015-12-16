@@ -30,12 +30,4 @@
 /**
  * Form fields
  */
-$GLOBALS['TL_LANG']['FFL']['calendar'] = array('Calendar field', 'a field that displays the TYPOlight-known calendar picker in frontend.');
-
-/**
- * Errors
- */
-$GLOBALS['TL_LANG']['ERR']['calendarfield_direction_ltToday'] = 'Please enter a date in the past (excluding today).';
-$GLOBALS['TL_LANG']['ERR']['calendarfield_direction_leToday'] = 'Please enter a date in the past (including today).';
-$GLOBALS['TL_LANG']['ERR']['calendarfield_direction_geToday'] = 'Please enter a date in the future (including today).';
-$GLOBALS['TL_LANG']['ERR']['calendarfield_direction_gtToday'] = 'Please enter a date in the future (excluding today).';
+$GLOBALS['TL_LANG']['FFL']['datepicker'] = array('Date Picker', 'Displays a datepicker field');

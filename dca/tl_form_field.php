@@ -37,7 +37,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['config']['onload_callback'][] = array('tl_f
  * Palettes
  */
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['__selector__'][] = 'dateImage';
-$GLOBALS['TL_DCA']['tl_form_field']['palettes']['calendar'] = '{type_legend},type,name,label;{fconfig_legend},rgxp,mandatory,placeholder,maxlength,dateFormat,dateDirection,dateExcludeCSS,dateImage;{expert_legend:hide},value,dateParseValue,class,accesskey;{submit_legend},addSubmit';
+$GLOBALS['TL_DCA']['tl_form_field']['palettes']['datepicker'] = '{type_legend},type,name,label;{fconfig_legend},rgxp,mandatory,placeholder,maxlength,dateFormat,dateStart,dateExcludeCSS,dateImage;{expert_legend:hide},value,dateParseValue,class,accesskey;{submit_legend},addSubmit';
 $GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['dateImage'] = 'dateImageSRC,dateImageOnly';
 
 
@@ -58,7 +58,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateStart'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_form_field']['dateStart'],
 	'exclude'                 => true,
-	'inputType'               => 'datePicker',
+	'inputType'               => 'datepicker',
 	'eval'                    => array('tl_class'=>'w50'),
 	'sql'                     => "varchar(10) NOT NULL default ''"
 );
@@ -119,7 +119,7 @@ class tl_form_field_datepicker extends Backend
 		{
 			$objField = $this->Database->execute("SELECT * FROM tl_form_field WHERE id=".$dc->id);
 
-			if ($objField->type == 'datePicker')
+			if ($objField->type == 'datepicker')
 			{
 				$GLOBALS['TL_DCA']['tl_form_field']['fields']['mandatory']['eval']['tl_class'] = 'w50 m12';
 				$GLOBALS['TL_DCA']['tl_form_field']['fields']['value']['eval']['tl_class'] = 'w50';

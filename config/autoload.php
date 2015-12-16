@@ -16,10 +16,10 @@
  */
 ClassLoader::addClasses(array
 (
-	'FormDatePickerField' => 'system/modules/calendarfield/FormDatePickerField.php',
+	'FormDatepickerField' => 'system/modules/bootstrap-datepicker/FormDatepickerField.php',
 ));
 
 TemplateLoader::addFiles(array
 (
-    'form_datepicker' => 'system/modules/datepicker/templates/form_datepicker'
+    'form_datepicker' => 'system/modules/bootstrap-datepicker/templates'
 ));

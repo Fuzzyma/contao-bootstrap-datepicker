@@ -30,5 +30,5 @@
 /**
  * Extension folder
  */
-$GLOBALS['TL_LANG']['MOD']['datepicker'] = array('Kalenderfeld', 'Zeigt einen Kalender an, mit dem ein Datum ausgewählt werden kann');
+$GLOBALS['TL_LANG']['MOD']['datepicker'] = array('Datumsauswahl', 'Zeigt einen Kalender an, mit dem ein Datum ausgewählt werden kann');
 

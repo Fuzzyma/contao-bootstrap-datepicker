@@ -30,5 +30,5 @@
 /**
  * Fields
  */
-$GLOBALS['TL_DCA']['tl_member']['fields']['dateOfBirth']['inputType'] = 'datePicker';
+$GLOBALS['TL_DCA']['tl_member']['fields']['dateOfBirth']['inputType'] = 'datepicker';
 
