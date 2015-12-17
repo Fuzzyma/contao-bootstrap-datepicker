@@ -44,10 +44,11 @@ class FormDatepickerField extends FormTextField
             $this->rgxp = 'date';
         }
 
-        if (!$this->dateExcludeCSS) {
+        if ($this->dateExcludeCSS) {
             $GLOBALS['TL_CSS'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
         }
 
+        // include jquery into backend to activate datepicker
         if (TL_MODE == 'BE')
         {
             if (!is_array($GLOBALS['TL_JAVASCRIPT']))
@@ -58,140 +59,85 @@ class FormDatepickerField extends FormTextField
             $jquery_src = 'assets/jquery/core/' . reset((scandir(TL_ROOT . '/assets/jquery/core', 1))) . '/jquery.min.js';
             array_unshift($GLOBALS['TL_JAVASCRIPT'], $jquery_src);
         }
-        
-        $GLOBALS['TL_JAVASCRIPT'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js';
-        $GLOBALS['TL_JAVASCRIPT'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/locales/bootstrap-datepicker.de.min.js';
+
+        if ($this->dateExcludeJS) {
+            $GLOBALS['TL_JAVASCRIPT'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js';
+            $GLOBALS['TL_JAVASCRIPT'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/locales/bootstrap-datepicker.de.min.js';
+        }
 
     }
 
     /* Generate is NEVER called. You may call it in your template to return the html markup for the field. */
     public function generate()
     {
-        /*$dateFormat = $this->dateFormat ?: $GLOBALS['TL_CONFIG'][$this->rgxp . 'Format'];
-        $dateDirection = $this->dateDirection ?: '0';
-        $jsEvent = $this->jsevent ?: 'domready';
 
-        if ($this->dateParseValue && $this->varValue != '') {
-            $this->varValue = \Date::parse($dateFormat, strtotime($this->varValue));
-        }*/
-
-        $strBuffer = parent::generate();
-
-        if ($this->readonly || $this->disabled) {
-            return $strBuffer;
-        }
-/*
-        // in the back end this is inlcuded automatically
-        if (TL_MODE == 'FE') {
-            $GLOBALS['TL_HEAD'][] = $this->getDateString();
-        }
-
-        // Initialize the default config
-        $arrConfig = array(
-            'draggable'    => (($this->draggable) ? "'true'" : "'false'"),
-            'pickerClass'  => (version_compare(VERSION, '3.3', '>=') ? "'datepicker_bootstrap'" : "'datepicker_dashboard'"),
-            'useFadeInOut' => "'!Browser.ie'",
-            'startDay'     => $GLOBALS['TL_LANG']['MSC']['weekOffset'],
-            'titleFormat'  => "'{$GLOBALS['TL_LANG']['MSC']['titleFormat']}'",
-        );
-
-        switch ($this->rgxp) {
-
-            case 'datim':
-                $arrConfig['timePicker'] = 'true';
-                break;
-
-            case 'time':
-                $arrConfig['pickOnly'] = 'time';
-                break;
-        }
-
-        switch ($dateDirection) {
-            case 'ltToday':
-                $time = strtotime('-1 day');
-                $arrConfig['maxDate'] = 'new Date(' . date('Y', $time) . ', ' . (date('n', $time)-1) . ', ' . date('j', $time) . ')';
-                break;
-
-            case 'leToday':
-                $arrConfig['maxDate'] = 'new Date(' . date('Y') . ', ' . (date('n')-1) . ', ' . date('j') . ')';
-                break;
-
-            case 'geToday':
-                $arrConfig['minDate'] = 'new Date(' . date('Y') . ', ' . (date('n')-1) . ', ' . date('j') . ')';
-                break;
-
-            case 'gtToday':
-                $time = strtotime('+1 day');
-                $arrConfig['minDate'] = 'new Date(' . date('Y', $time) . ', ' . (date('n', $time)-1) . ', ' . date('j', $time) . ')';
-                break;
-        }
-
-        // default Offset
-        $intOffsetX = 0;
-        $intOffsetY = 0;
-
-        // seems to be necessary for the backend but does only hurt in the FE
-        $style = (TL_MODE == 'BE') ? ' style="vertical-align:-6px;"' : '';
-
-        if ($this->dateImage) {
-            // icon
-            $strIcon = 'assets/mootools/datepicker/'.DATEPICKER.'/icon.gif';
-
-            if (\Validator::isUuid($this->dateImageSRC)) {
-                $objFile = \FilesModel::findByPk($this->dateImageSRC);
-
-                if ($objFile !== null && is_file(TL_ROOT . '/' . $objFile->path)) {
-                    $strIcon = $objFile->path;
-                }
-            }
-
-            $arrSize = @getimagesize(TL_ROOT . '/' . $strIcon);
-
-            $strBuffer .= '<img src="' . $strIcon . '" width="' . $arrSize[0] . '" height="' . $arrSize[1] . '" alt="" class="CalendarFieldIcon" id="toggle_' . $this->strId . '"' . $style . '>';
-
-            $arrConfig['toggle'] = "$$('#toggle_" . $this->strId . "')";
-
-            if ($this->dateImageOnly) {
-                $arrConfig['togglesOnly'] = 'false';
-            }
-
-            // make offsets configurable (useful for the front end but can be used in the back end as well)
-            $intOffsetX = -197;
-            $intOffsetY = -182;
-        }
-
-        // make offsets configurable (useful for the front end but can be used in the back end as well)
-        $intOffsetX = (is_numeric($this->offsetX)) ? $this->offsetX : $intOffsetX;
-        $intOffsetY = (is_numeric($this->offsetY)) ? $this->offsetY : $intOffsetY;
-        $arrConfig['positionOffset'] = '{x:' . $intOffsetX . ',y:' . $intOffsetY . '}';
-
-        // correctly style the date format
-        $arrConfig['format'] = "'" . Date::formatToJs($dateFormat) . "'";
-*/
-        // HOOK: allow to customize the date picker
+        // callback can change all options
         if (isset($GLOBALS['TL_HOOKS']['formDatepickerField']) && is_array($GLOBALS['TL_HOOKS']['formDatepickerField'])) {
             foreach ($GLOBALS['TL_HOOKS']['formDatepickerField'] as $callback) {
                 $objCallback = (method_exists($callback[0], 'getInstance') ? call_user_func(array($callback[0], 'getInstance')) : new $callback[0]());
-                $arrConfig = $objCallback->$callback[1]($arrConfig, $this);
+                $arrConfig = $objCallback->$callback[1]($this);
             }
         }
 
-/*
-        $arrCompiledConfig = array();
-        foreach ($arrConfig as $k => $v) {
-            $arrCompiledConfig[] = "    '" . $k . "': " . $v;
-        }
+        // collect all options
+        $options = [
+            'format' => $this->dateFormat,
+            'startDate' => $this->dateStartDate,
+            'enddate' => $this->dateEnddate,
+            'excludeCSS' => $this->dateExcludeCSS,
+            'excludeJS' => $this->dateExcludeJS,
+            'autoclose' => $this->dateAutoclose,
+            'beforeShowDay' => $this->dateBeforeShowDay,
+            'beforeShowMonth' => $this->dateBeforeShowMonth,
+            'beforeShowYear' => $this->dateBeforeShowYear,
+            'beforeShowDecade' => $this->dateBeforeShowDecade,
+            'beforeShowCentury' => $this->dateBeforeShowCentury,
+            'calendarWeeks' => $this->dateCalendarWeeks,
+            'clearBtn' => $this->dateClearBtn,
+            'container' => $this->dateContainer,
+            'datesDisabled' => $this->dateDatesDisabled,
+            'daysOfWeekDisabled' => $this->dateDaysOfWeekDisabled,
+            'daysOfWeekHighlighted' => $this->dateDaysOfWeekHighlighted,
+            'defaultViewDate' => $this->dateDefaultViewDate,
+            'disableTouchKeyboard' => $this->dateDisableTouchKeyboard,
+            'enableOnReadonly' => $this->dateEnableOnReadonly,
+            'forceParse' => $this->dateForceParse,
+            'assumeNearbyYear' => $this->dateAssumeNearbyYear,
+            'assumeNearbyYear_number' => $this->dateAssumeNearbyYear_number,
+            'immediateUpdates' => $this->dateImmediateUpdates,
+            'inputs' => $this->dateInputs,
+            'keyboardNavigation' => $this->dateKeyboardNavigation,
+            'language' => $this->dateLanguage,
+            'maxViewMode' => $this->dateMaxViewMode,
+            'minViewMode' => $this->dateMinViewMode,
+            'multidate' => $this->multiple ? $this->multiple : $this->dateMultidate,
+            'multidate_count' => $this->dateMultidate_count,
+            'multidateSeparator' => $this->dateMultidateSeparator,
+            'orientation' => $this->dateOrientation,
+            'showOnFocus' => $this->dateShowOnFocus,
+            'startView' => $this->dateStartView,
+            'templates' => $this->dateTemplates,
+            'title' => $this->dateTitle,
+            'todayBtn' => $this->dateTodayBtn,
+            'todayHighlight' => $this->dateTodayHighlight,
+            'toggleActive' => $this->dateToggleActive,
+            'weekStart' => $this->dateWeekStart,
+            'zIndexOffset' => $this->dateZIndexOffset,
+        ];
 
-        $strBuffer .= "
-<script>
-window.addEvent('" . $jsEvent . "', function() {
-  new Picker.Date($$('#ctrl_" . $this->strId . "'), {
-" . implode(",\n", $arrCompiledConfig) . "
-  });
-});
-</script>";
-*/
-        return $strBuffer;
+        $attributes = '';
+
+        foreach($options as $key => $option){
+            $attributes .= 'data-date-'.ltrim(strtolower(preg_replace('/[A-Z]/', '-$0', $key)), '-').'="'.$option.'"';
+        }
+        
+		return sprintf('<input type="text" name="%s" id="ctrl_%s" class="%s"%s %s>',
+						$this->strName,
+						$this->strId,
+						$this->class,
+						$this->getAttributes(),
+                        $attributes) . $this->addSubmit();
+
     }
 
     public function validator($varInput)
@@ -290,13 +236,15 @@ window.addEvent('" . $jsEvent . "', function() {
 
                 // Patch year: allow 1900 - 2099
                 case 'Y':
-                    $arrRegexp[$strFormat]['perl']  .= '(19|20)[0-9]{2,2}';
+                    $arrRegexp[$strFormat]['perl']  .= '(19|20)[0-9]{2    '2' => $this->2,
+}';
                     $arrRegexp[$strFormat]['posix'] .= '(19|20)[[:digit:]]{2}';
                     break;
 
                 case 'a':
                 case 'A':
-                    $arrRegexp[$strFormat]['perl']  .= '[apmAPM]{2,2}';
+                    $arrRegexp[$strFormat]['perl']  .= '[apmAPM]{2    '2' => $this->2,
+}';
                     $arrRegexp[$strFormat]['posix'] .= '[apmAPM]{2}';
                     break;
 
@@ -305,7 +253,8 @@ window.addEvent('" . $jsEvent . "', function() {
                 case 'H':
                 case 'i':
                 case 's':
-                    $arrRegexp[$strFormat]['perl']  .= '[0-9]{2,2}';
+                    $arrRegexp[$strFormat]['perl']  .= '[0-9]{2    '2' => $this->2,
+}';
                     $arrRegexp[$strFormat]['posix'] .= '[[:digit:]]{2}';
                     break;
 
@@ -313,8 +262,10 @@ window.addEvent('" . $jsEvent . "', function() {
                 case 'n':
                 case 'g':
                 case 'G':
-                    $arrRegexp[$strFormat]['perl']  .= '[0-9]{1,2}';
-                    $arrRegexp[$strFormat]['posix'] .= '[[:digit:]]{1,2}';
+                    $arrRegexp[$strFormat]['perl']  .= '[0-9]{1    '2' => $this->2,
+}';
+                    $arrRegexp[$strFormat]['posix'] .= '[[:digit:]]{1    '2' => $this->2,
+}';
                     break;
 
                 default:
@@ -325,37 +276,6 @@ window.addEvent('" . $jsEvent . "', function() {
         }
 
         return $arrRegexp[$strFormat][$strRegexpSyntax];
-    }*/
-
-
-    /**
-     * Return the datepicker string
-     *
-     * Fix the MooTools more parsers which incorrectly parse ISO-8601 and do
-     * not handle German date formats at all.
-     * @return string
-     *//*
-    public function getDateString()
-    {
-        return '
-<script>
-window.addEvent("domready",function(){
-  Locale.define("en-US","Date",{
-    months:["' . implode('","', $GLOBALS['TL_LANG']['MONTHS']) . '"],
-    days:["' . implode('","', $GLOBALS['TL_LANG']['DAYS']) . '"],
-    months_abbr:["' . implode('","', $GLOBALS['TL_LANG']['MONTHS_SHORT']) . '"],
-    days_abbr:["' . implode('","', $GLOBALS['TL_LANG']['DAYS_SHORT']) . '"]
-  });
-  Locale.define("en-US","DatePicker",{
-    select_a_time:"' . $GLOBALS['TL_LANG']['DP']['select_a_time'] . '",
-    use_mouse_wheel:"' . $GLOBALS['TL_LANG']['DP']['use_mouse_wheel'] . '",
-    time_confirm_button:"' . $GLOBALS['TL_LANG']['DP']['time_confirm_button'] . '",
-    apply_range:"' . $GLOBALS['TL_LANG']['DP']['apply_range'] . '",
-    cancel:"' . $GLOBALS['TL_LANG']['DP']['cancel'] . '",
-    week:"' . $GLOBALS['TL_LANG']['DP']['week'] . '"
-  });
-});
-</script>';
     }*/
 }
 
