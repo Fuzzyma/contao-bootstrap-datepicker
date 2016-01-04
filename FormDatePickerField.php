@@ -44,7 +44,7 @@ class FormDatepickerField extends FormTextField
             $this->rgxp = 'date';
         }
 
-        if ($this->dateExcludeCSS) {
+        if (!$this->dateExcludeCSS) {
             $GLOBALS['TL_CSS'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
         }
 
@@ -60,7 +60,7 @@ class FormDatepickerField extends FormTextField
             array_unshift($GLOBALS['TL_JAVASCRIPT'], $jquery_src);
         }
 
-        if ($this->dateExcludeJS) {
+        if (!$this->dateExcludeJS) {
             $GLOBALS['TL_JAVASCRIPT'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js';
             $GLOBALS['TL_JAVASCRIPT'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/locales/bootstrap-datepicker.de.min.js';
         }
@@ -80,63 +80,60 @@ class FormDatepickerField extends FormTextField
         }
 
         // collect all options
-        $options = [
-            'format' => $this->dateFormat,
-            'startDate' => $this->dateStartDate,
-            'enddate' => $this->dateEnddate,
-            'excludeCSS' => $this->dateExcludeCSS,
-            'excludeJS' => $this->dateExcludeJS,
-            'autoclose' => $this->dateAutoclose,
-            'beforeShowDay' => $this->dateBeforeShowDay,
-            'beforeShowMonth' => $this->dateBeforeShowMonth,
-            'beforeShowYear' => $this->dateBeforeShowYear,
-            'beforeShowDecade' => $this->dateBeforeShowDecade,
-            'beforeShowCentury' => $this->dateBeforeShowCentury,
-            'calendarWeeks' => $this->dateCalendarWeeks,
-            'clearBtn' => $this->dateClearBtn,
-            'container' => $this->dateContainer,
-            'datesDisabled' => $this->dateDatesDisabled,
-            'daysOfWeekDisabled' => $this->dateDaysOfWeekDisabled,
-            'daysOfWeekHighlighted' => $this->dateDaysOfWeekHighlighted,
-            'defaultViewDate' => $this->dateDefaultViewDate,
-            'disableTouchKeyboard' => $this->dateDisableTouchKeyboard,
-            'enableOnReadonly' => $this->dateEnableOnReadonly,
-            'forceParse' => $this->dateForceParse,
-            'assumeNearbyYear' => $this->dateAssumeNearbyYear,
+        $this->options = [
+            'format'                  => $this->dateFormat,
+            'startDate'               => $this->dateStartDate,
+            'endDate'                 => $this->dateEnddate,
+            'excludeCSS'              => $this->dateExcludeCSS,
+            'excludeJS'               => $this->dateExcludeJS,
+            'autoclose'               => $this->dateAutoclose,
+            'beforeShowDay'           => $this->dateBeforeShowDay,
+            'beforeShowMonth'         => $this->dateBeforeShowMonth,
+            'beforeShowYear'          => $this->dateBeforeShowYear,
+            'beforeShowDecade'        => $this->dateBeforeShowDecade,
+            'beforeShowCentury'       => $this->dateBeforeShowCentury,
+            'calendarWeeks'           => $this->dateCalendarWeeks,
+            'clearBtn'                => $this->dateClearBtn,
+            'container'               => $this->dateContainer,
+            'datesDisabled'           => $this->dateDatesDisabled,
+            'daysOfWeekDisabled'      => $this->dateDaysOfWeekDisabled,
+            'daysOfWeekHighlighted'   => $this->dateDaysOfWeekHighlighted,
+            'defaultViewDate'         => $this->dateDefaultViewDate,
+            'disableTouchKeyboard'    => $this->dateDisableTouchKeyboard,
+            'enableOnReadonly'        => $this->dateEnableOnReadonly,
+            'forceParse'              => $this->dateForceParse,
+            'assumeNearbyYear'        => $this->dateAssumeNearbyYear,
             'assumeNearbyYear_number' => $this->dateAssumeNearbyYear_number,
-            'immediateUpdates' => $this->dateImmediateUpdates,
-            'inputs' => $this->dateInputs,
-            'keyboardNavigation' => $this->dateKeyboardNavigation,
-            'language' => $this->dateLanguage,
-            'maxViewMode' => $this->dateMaxViewMode,
-            'minViewMode' => $this->dateMinViewMode,
-            'multidate' => $this->multiple ? $this->multiple : $this->dateMultidate,
-            'multidate_count' => $this->dateMultidate_count,
-            'multidateSeparator' => $this->dateMultidateSeparator,
-            'orientation' => $this->dateOrientation,
-            'showOnFocus' => $this->dateShowOnFocus,
-            'startView' => $this->dateStartView,
-            'templates' => $this->dateTemplates,
-            'title' => $this->dateTitle,
-            'todayBtn' => $this->dateTodayBtn,
-            'todayHighlight' => $this->dateTodayHighlight,
-            'toggleActive' => $this->dateToggleActive,
-            'weekStart' => $this->dateWeekStart,
-            'zIndexOffset' => $this->dateZIndexOffset,
+            'immediateUpdates'        => $this->dateImmediateUpdates,
+            'inputs'                  => $this->dateInputs,
+            'keyboardNavigation'      => $this->dateKeyboardNavigation,
+            'language'                => $this->dateLanguage,
+            'maxViewMode'             => $this->dateMaxViewMode == 'centuries' ? '' : $this->dateMaxViewMode,
+            'minViewMode'             => $this->dateMinViewMode == 'days' ? '' : $this->dateMinViewMode,
+            'multidate'               => $this->multiple ? $this->multiple : $this->dateMultidate,
+            'multidate_count'         => $this->multiple,
+            'multidateSeparator'      => $this->dateMultidate && $this->dateMultidateSeperator != ',' ? $this->dateMultidateSeperator : '',
+            'orientation'             => $this->dateOrientation,
+            'showOnFocus'             => $this->dateShowOnFocus,
+            'startView'               => $this->dateStartView,
+            'templates'               => $this->dateTemplates,
+            'title'                   => $this->dateTitle,
+            'todayBtn'                => $this->dateTodayBtn ? 'linked' : '',
+            'todayHighlight'          => $this->dateTodayHighlight,
+            'toggleActive'            => $this->dateToggleActive,
+            'weekStart'               => $this->dateWeekStart == 'Sunday' ? '' : $this->dateWeekStart,
+            'zIndexOffset'            => $this->dateZIndexOffset,
         ];
-
+        
         $attributes = '';
 
-        foreach($options as $key => $option){
-            $attributes .= 'data-date-'.ltrim(strtolower(preg_replace('/[A-Z]/', '-$0', $key)), '-').'="'.$option.'"';
+        foreach($this->options as $key => $option){
+            if($option != ''){
+                $attributes .= 'data-date-'.ltrim(strtolower(preg_replace('/[A-Z]/', '-$0', $key)), '-').'="'.$option.'"';
+            }
         }
-        
-		return sprintf('<input type="text" name="%s" id="ctrl_%s" class="%s"%s %s>',
-						$this->strName,
-						$this->strId,
-						$this->class,
-						$this->getAttributes(),
-                        $attributes) . $this->addSubmit();
+
+		return '<div class="input-group date" data-provide="datepicker" '.$attributes.'>'.$this->addSubmit();
 
     }
 

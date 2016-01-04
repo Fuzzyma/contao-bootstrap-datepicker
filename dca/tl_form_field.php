@@ -80,7 +80,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateBeforeShowDay'] = array
     'exclude'   => true,
     'inputType' => 'text',
     'eval'      => array('allowHtml'=>true, 'class'=>'monospace', 'rte'=>'ace|html', 'helpwizard'=>true),
-    'sql'       => "mediumtext NULL"
+    'sql'       => "mediumtext NOT NULL"
 );
 
 /*
@@ -93,7 +93,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateBeforeShowMonth'] = array
     'exclude'   => true,
     'inputType' => 'text',
     'eval'      => array('allowHtml'=>true, 'class'=>'monospace', 'rte'=>'ace|html', 'helpwizard'=>true),
-    'sql'       => "mediumtext NULL"
+    'sql'       => "mediumtext NOT NULL"
 );
 
 /*
@@ -113,7 +113,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateBeforeShowYear'] = array
     'exclude'   => true,
     'inputType' => 'text',
     'eval'      => array('allowHtml'=>true, 'class'=>'monospace', 'rte'=>'ace|html', 'helpwizard'=>true),
-    'sql'       => "mediumtext NULL"
+    'sql'       => "mediumtext NOT NULL"
 );
 
 /*
@@ -134,7 +134,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateBeforeShowDecade'] = array
     'exclude'   => true,
     'inputType' => 'text',
     'eval'      => array('allowHtml'=>true, 'class'=>'monospace', 'rte'=>'ace|html', 'helpwizard'=>true),
-    'sql'       => "mediumtext NULL"
+    'sql'       => "mediumtext NOT NULL"
 );
 
 /*
@@ -155,7 +155,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateBeforeShowCentury'] = array
     'exclude'   => true,
     'inputType' => 'text',
     'eval'      => array('allowHtml'=>true, 'class'=>'monospace', 'rte'=>'ace|html', 'helpwizard'=>true),
-    'sql'       => "mediumtext NULL"
+    'sql'       => "mediumtext NOT NULL"
 );
 
 /*
@@ -194,7 +194,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateContainer'] = array
     'exclude'   => true,
     'inputType' => 'text',
     'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
-    'sql'       => "varchar(255) NOT NULL default 'body'"
+    'sql'       => "varchar(255) NOT NULL default ''"
 );
 
 /*
@@ -207,7 +207,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateDatesDisabled'] = array
     'exclude'   => true,
     'inputType' => 'datepicker',
     'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50', 'multiselect' => true),
-    'sql'       => "mediumtext NULL"
+    'sql'       => "mediumtext NOT NULL"
 );
 
 /*
@@ -420,12 +420,12 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateMaxViewMode'] = array
     'inputType' => 'select',
     'options'   => array(0 => 'days', 1 => 'month', 2 => 'years', 3 => 'decades', 4 => 'centuries'),
     'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(255) NOT NULL default 'centuries'"
 );
 
 /*
-Number, String. Default: 4, “centuries”
-Set a maximum limit for the view mode. Accepts: “days” or 0, “months” or 1, “years” or 2, “decades” or 3, and “centuries” or 4. Gives the ability to pick only a day, a month, a year or a decade. The day is set to the 1st for “months”, the month is set to January for “years”, the year is set to the first year from the decade for “decades”, and the year is set to the first from the millennium for “centuries”.
+Number, String. Default: 0, “days”
+Set a minimum limit for the view mode. Accepts: “days” or 0, “months” or 1, “years” or 2, “decades” or 3, and “centuries” or 4. Gives the ability to pick only a month, a year or a decade. The day is set to the 1st for “months”, and the month is set to January for “years”, the year is set to the first year from the decade for “decades”, and the year is set to the first from the millennium for “centuries”.
 */
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateMinViewMode'] = array
 (
@@ -434,19 +434,19 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateMinViewMode'] = array
     'inputType' => 'select',
     'options'   => array(0 => 'days', 1 => 'month', 2 => 'years', 3 => 'decades', 4 => 'centuries'),
     'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
-    'sql'       => "varchar(255) NOT NULL default ''"
+    'sql'       => "varchar(255) NOT NULL default 'days'"
 );
 
 /*
-Number, String. Default: 4, “centuries”
-Set a maximum limit for the view mode. Accepts: “days” or 0, “months” or 1, “years” or 2, “decades” or 3, and “centuries” or 4. Gives the ability to pick only a day, a month, a year or a decade. The day is set to the 1st for “months”, the month is set to January for “years”, the year is set to the first year from the decade for “decades”, and the year is set to the first from the millennium for “centuries”.
+Boolean, Number. Default: false
+Enable multidate picking. Each date in month view acts as a toggle button, keeping track of which dates the user has selected in order. If a number is given, the picker will limit how many dates can be selected to that number, dropping the oldest dates from the list when the number is exceeded. true equates to no limit. The input’s value (if present) is set to a string generated by joining the dates, formatted, with multidateSeparator.
 */
 $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateMultidate'] = array
 (
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateMultidate'],
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => array('helpwizard'=>true),
+    'eval'      => array('helpwizard'=>true, 'submitOnChange' => true),
     'sql'       => "char(1) NOT NULL default ''"
 );
 
@@ -554,7 +554,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateTemplates'] = array
     'exclude'   => true,
     'inputType' => 'text',
     'eval'      => array('allowHtml'=>true, 'class'=>'monospace', 'rte'=>'ace|html', 'helpwizard'=>true),
-    'sql'       => "mediumtext NULL"
+    'sql'       => "mediumtext NOT NULL"
 );
 
 /*
@@ -620,7 +620,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateWeekStart'] = array
     'inputType' => 'select',
     'options'   => array(0 => 'Sunday', 1 => 'Monday', 2 => 'Tuesday', 3 => 'Wednesday', 4 => 'Thursday', 5 => 'Friday', 6 => 'Saturday'),
     'eval'      => array('helpwizard'=>true),
-    'sql'       => "char(1) NOT NULL default ''"
+    'sql'       => "varchar(255) NOT NULL default ''"
 );
 
 /*
