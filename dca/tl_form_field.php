@@ -39,12 +39,22 @@ $GLOBALS['TL_DCA']['tl_form_field']['config']['onload_callback'][] = array('tl_f
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['__selector__'][] = 'dateAssumeNearbyYear';
 $GLOBALS['TL_DCA']['tl_form_field']['palettes']['__selector__'][] = 'dateMultidate';
 
-$GLOBALS['TL_DCA']['tl_form_field']['palettes']['datepicker'] = '{type_legend},type,name,label;{simple_config},mandatory,placeholder,dateFormat,dateStartDate,dateEndDate;{file_config:hide},dateExcludeCSS,dateExcludeJS;{expert_legend:hide},dateAutoclose,dateBeforeShowDay,dateBeforeShowMonth,dateBeforeShowYear,dateBeforeShowDecade,dateBeforeShowCentury,dateCalendarWeeks,dateClearBtn,dateContainer,dateDatesDisabled,dateDaysOfWeekDisabled,dateDaysOfWeekHighlighted,dateDefaultViewDate,dateDisableTouchKeyboard,dateEnableOnReadonly,dateForceParse,dateAssumeNearbyYear,dateImmediateUpdates,dateInputs,dateKeyboardNavigation,dateLanguage,dateMaxViewMode,dateMinViewMode,dateMultidate,dateOrientation,dateShowOnFocus,dateStartView,dateTemplates,dateTitle,dateTodayBtn,dateTodayHighlight,dateToggleActive,dateWeekStart,dateZIndexOffset,class,accesskey;{submit_legend},addSubmit';
+$GLOBALS['TL_DCA']['tl_form_field']['palettes']['datepicker'] = '
+{type_legend},type,name,label;
+{simple_config},mandatory,dateAutoclose,dateFormat,placeholder,dateStartDate,dateEndDate,dateLanguage,dateMultidate;
+{datesettings_legend:hide},dateWeekStart,dateDaysOfWeekDisabled,dateDaysOfWeekHighlighted,dateDatesDisabled,dateDefaultViewDate;
+{file_config:hide},dateExcludeCSS,dateExcludeJS;
+{pickerlayout_legend:hide},dateTitle,dateContainer,dateCalendarWeeks,dateClearBtn,dateTodayBtn,dateTodayHighlight,dateMaxViewMode,dateMinViewMode;
+{expert_legend:hide},dateDisableTouchKeyboard,dateEnableOnReadonly,dateForceParse,dateImmediateUpdates,dateKeyboardNavigation,dateToggleActive,dateShowOnFocus,dateAssumeNearbyYear,dateInputs,dateOrientation,dateStartView,accesskey,dateZIndexOffset,class;
+{viewcallback_legend:hide},dateBeforeShowDay,dateBeforeShowMonth,dateBeforeShowYear,dateBeforeShowDecade,dateBeforeShowCentury;
+{submit_legend},addSubmit;{template_legend},dateTemplates,customTpl';
 
 $GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['dateAssumeNearbyYear'] = 'dateAssumeNearbyYear_number';
 
 $GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['dateMultidate'] = 'dateMultidate_count,dateMultidateSeparator';
 
+//$GLOBALS['TL_DCA']['tl_form_field']['fields']['mandatory']['eval']['tl_class'] = 'clr w50';
+//$GLOBALS['TL_DCA']['tl_form_field']['fields']['placeholder']['eval']['tl_class'] = 'clr w50';
 
 /**
  * Options According to https://bootstrap-datepicker.readthedocs.org/en/latest/options.html
@@ -59,7 +69,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateAutoclose'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateAutoclose'],
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class' => 'm12 w50'),
     'sql'       => "char(1) NOT NULL default ''"
 );
 
@@ -167,7 +177,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateCalendarWeeks'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateCalendarWeeks'],
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "char(1) NOT NULL default ''"
 );
 
@@ -180,7 +190,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateClearBtn'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateClearBtn'],
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "char(1) NOT NULL default ''"
 );
 
@@ -193,7 +203,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateContainer'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateContainer'],
     'exclude'   => true,
     'inputType' => 'text',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
@@ -232,7 +242,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateDaysOfWeekHighlighted'] = arr
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateDaysOfWeekHighlighted'],
     'exclude'   => true,
     'inputType' => 'text',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
@@ -245,7 +255,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateDefaultViewDate'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateDefaultViewDate'],
     'exclude'   => true,
     'inputType' => 'datepicker',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
@@ -271,7 +281,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateEnableOnReadonly'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateEnableOnReadonly'],
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "char(1) NOT NULL default ''"
 );
 
@@ -284,7 +294,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateEndDate'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateEndDate'],
     'exclude'   => true,
     'inputType' => 'datepicker',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
@@ -312,7 +322,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateAssumeNearbyYear'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateAssumeNearbyYear'],
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => array('helpwizard'=>true, 'submitOnChange' => true),
+    'eval'      => array('helpwizard'=>true, 'submitOnChange' => true, 'tl_class'=>'w50'),
     'sql'       => "char(1) NOT NULL default ''"
 );
 
@@ -321,7 +331,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateAssumeNearbyYear_number'] = a
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateAssumeNearbyYear_number'],
     'exclude'   => true,
     'inputType' => 'text',
-    'eval'      => array('helpwizard'=>true),
+    'eval'      => array('helpwizard'=>true, 'tl_class' => 'clr w50'),
     'sql'       => "varchar(2) NOT NULL default ''"
 );
 
@@ -339,7 +349,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateFormat'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateFormat'],
     'exclude'   => true,
     'inputType' => 'text',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class' => 'clr w50'),
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
@@ -353,7 +363,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateImmediateUpdates'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateImmediateUpdates'],
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "char(1) NOT NULL default ''"
 );
 
@@ -433,7 +443,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateMinViewMode'] = array
     'exclude'   => true,
     'inputType' => 'select',
     'options'   => array(0 => 'days', 1 => 'month', 2 => 'years', 3 => 'decades', 4 => 'centuries'),
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "varchar(255) NOT NULL default 'days'"
 );
 
@@ -446,7 +456,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateMultidate'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateMultidate'],
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => array('helpwizard'=>true, 'submitOnChange' => true),
+    'eval'      => array('helpwizard'=>true, 'submitOnChange' => true, 'tl_class' => 'clr'),
     'sql'       => "char(1) NOT NULL default ''"
 );
 
@@ -471,7 +481,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateMultidateSeparator'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateMultidateSeparator'],
     'exclude'   => true,
     'inputType' => 'text',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "varchar(255) NOT NULL default ','"
 );
 
@@ -488,7 +498,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateOrientation'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateOrientation'],
     'exclude'   => true,
     'inputType' => 'text',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
@@ -501,7 +511,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateShowOnFocus'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateShowOnFocus'],
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => array('helpwizard'=>true),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "char(1) NOT NULL default ''"
 );
 
@@ -514,7 +524,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateStartDate'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateStartDate'],
     'exclude'   => true,
     'inputType' => 'datepicker',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50', 'size' => 'hallo', 'multiple' => 'Hallo'),
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 
@@ -579,7 +589,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateTodayBtn'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateTodayBtn'],
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => array('helpwizard'=>true),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "char(1) NOT NULL default ''"
 );
 
@@ -592,7 +602,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateTodayHighlight'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateTodayHighlight'],
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => array('helpwizard'=>true),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "char(1) NOT NULL default ''"
 );
 
@@ -605,7 +615,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateToggleActive'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateToggleActive'],
     'exclude'   => true,
     'inputType' => 'checkbox',
-    'eval'      => array('helpwizard'=>true),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'w50'),
     'sql'       => "char(1) NOT NULL default ''"
 );
 

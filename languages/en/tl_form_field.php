@@ -37,3 +37,8 @@ $GLOBALS['TL_LANG']['tl_form_field']['dateExcludeCSS'] = array('Do not include C
 $GLOBALS['TL_LANG']['tl_form_field']['dateImage']      = array('Show calendar icon', 'Click here to show a calendar picker icon.');
 $GLOBALS['TL_LANG']['tl_form_field']['dateImageSRC']   = array('Custom icon', 'Select a custom image to replace the default calendar icon.');
 $GLOBALS['TL_LANG']['tl_form_field']['dateImageOnly']  = array('Force date picker', 'Check here if the date must not be entered manually.');
+
+$GLOBALS['TL_LANG']['tl_form_field']['dateAutoclose'] = array('Autoclose Schließen', 'Whether or not to close the datepicker immediately when a date is selected.');
+$GLOBALS['TL_LANG']['tl_form_field']['dateBeforeShowDay'] = array('Javascript executed before day view is shown');
+
+

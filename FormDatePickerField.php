@@ -110,8 +110,8 @@ class FormDatepickerField extends FormTextField
             'language'                => $this->dateLanguage,
             'maxViewMode'             => $this->dateMaxViewMode == 'centuries' ? '' : $this->dateMaxViewMode,
             'minViewMode'             => $this->dateMinViewMode == 'days' ? '' : $this->dateMinViewMode,
-            'multidate'               => $this->multiple ? $this->multiple : $this->dateMultidate,
-            'multidate_count'         => $this->multiple,
+            'multidate'               => $this->multiSelect ? $this->multiSelect : $this->dateMultidate,
+            'multidate_count'         => $this->dateMultidate_count,
             'multidateSeparator'      => $this->dateMultidate && $this->dateMultidateSeperator != ',' ? $this->dateMultidateSeperator : '',
             'orientation'             => $this->dateOrientation,
             'showOnFocus'             => $this->dateShowOnFocus,
@@ -124,7 +124,15 @@ class FormDatepickerField extends FormTextField
             'weekStart'               => $this->dateWeekStart == 'Sunday' ? '' : $this->dateWeekStart,
             'zIndexOffset'            => $this->dateZIndexOffset,
         ];
-        
+
+        #8177 (https://github.com/contao/core/issues/8177)
+        /*if(TL_MODE == 'BE'){
+            $table = \Input::get('table');
+            dump($table);
+            dump($this);
+            $this->options = array_merge($this->options, array_intersect($GLOBALS['TL_DCA'][$table][$this->strName]['eval'], $this->options));
+        }*/
+
         $attributes = '';
 
         foreach($this->options as $key => $option){
@@ -133,7 +141,7 @@ class FormDatepickerField extends FormTextField
             }
         }
 
-		return '<div class="input-group date" data-provide="datepicker" '.$attributes.'>'.$this->addSubmit();
+		return '<div class="input-group date" data-provide="datepicker" '.$attributes.'>';
 
     }
 
