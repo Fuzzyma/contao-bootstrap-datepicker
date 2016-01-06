@@ -216,7 +216,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateDatesDisabled'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateDatesDisabled'],
     'exclude'   => true,
     'inputType' => 'datepicker',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50', 'multiselect' => true),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50', 'multidate' => true),
     'sql'       => "mediumtext NOT NULL"
 );
 
@@ -524,7 +524,7 @@ $GLOBALS['TL_DCA']['tl_form_field']['fields']['dateStartDate'] = array
     'label'     => &$GLOBALS['TL_LANG']['tl_form_field']['dateStartDate'],
     'exclude'   => true,
     'inputType' => 'datepicker',
-    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50', 'size' => 'hallo', 'multiple' => 'Hallo'),
+    'eval'      => array('helpwizard'=>true, 'tl_class'=>'clr w50'),
     'sql'       => "varchar(255) NOT NULL default ''"
 );
 

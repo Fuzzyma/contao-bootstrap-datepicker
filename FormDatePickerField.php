@@ -35,11 +35,14 @@ class FormDatepickerField extends FormTextField
      * @var string
      */
     protected $strTemplate = 'form_datepicker';
+    private $options = array();
 
     public function __construct($arrAttributes = null)
     {
         parent::__construct($arrAttributes);
 
+        $this->evals = $arrAttributes;
+        
         if ($this->rgxp != 'datim' && $this->rgxp != 'time') {
             $this->rgxp = 'date';
         }
@@ -110,7 +113,7 @@ class FormDatepickerField extends FormTextField
             'language'                => $this->dateLanguage,
             'maxViewMode'             => $this->dateMaxViewMode == 'centuries' ? '' : $this->dateMaxViewMode,
             'minViewMode'             => $this->dateMinViewMode == 'days' ? '' : $this->dateMinViewMode,
-            'multidate'               => $this->multiSelect ? $this->multiSelect : $this->dateMultidate,
+            'multidate'               => $this->dateMultidate,
             'multidate_count'         => $this->dateMultidate_count,
             'multidateSeparator'      => $this->dateMultidate && $this->dateMultidateSeperator != ',' ? $this->dateMultidateSeperator : '',
             'orientation'             => $this->dateOrientation,
@@ -125,13 +128,14 @@ class FormDatepickerField extends FormTextField
             'zIndexOffset'            => $this->dateZIndexOffset,
         ];
 
-        #8177 (https://github.com/contao/core/issues/8177)
-        /*if(TL_MODE == 'BE'){
-            $table = \Input::get('table');
-            dump($table);
-            dump($this);
-            $this->options = array_merge($this->options, array_intersect($GLOBALS['TL_DCA'][$table][$this->strName]['eval'], $this->options));
-        }*/
+        // get all evals from dca and merge them with options
+        if(TL_MODE == 'BE'){
+            foreach($this->options as $key => &$value){
+                if(isset($this->evals[$key])){
+                    $value = $this->evals[$key];
+                }
+            }
+        }
 
         $attributes = '';
 
