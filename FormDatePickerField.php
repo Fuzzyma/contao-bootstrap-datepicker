@@ -34,18 +34,21 @@ class FormDatepickerField extends FormTextField
      *
      * @var string
      */
-    protected $strTemplate = 'form_datepicker';
+    protected $strTemplate = 'be_widget';
     private $options = array();
 
     public function __construct($arrAttributes = null)
     {
+    
+        if(TL_MODE == 'FE'){
+            $strTemplate = 'form_datepicker';
+        }
+    
         parent::__construct($arrAttributes);
 
         $this->evals = $arrAttributes;
-        
-        if ($this->rgxp != 'datim' && $this->rgxp != 'time') {
-            $this->rgxp = 'date';
-        }
+
+        $this->rgxp = 'date';
 
         if (!$this->dateExcludeCSS) {
             $GLOBALS['TL_CSS'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
@@ -145,7 +148,13 @@ class FormDatepickerField extends FormTextField
             }
         }
 
-		return '<div class="input-group date" data-provide="datepicker" '.$attributes.'>';
+		return '
+      <div class="input-group date" data-provide="datepicker" '.$attributes.'>
+        <input type="text" name="'.$this->strName.'" id="ctrl_'.$this->strId.'" class="tl_text '.$this->class.'"'.$this->getAttributes().'> 
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-th"></span>
+        </span>
+      </div>';
 
     }
 
