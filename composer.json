@@ -15,9 +15,6 @@
         "contao-community-alliance/composer-installer":"*",
         "eternicode/bootstrap-datepicker":"1.5.*"
     },
-    "replace": {
-        "contao-legacy/calendarfield": "self.version"
-    },
     "extra":{
         "contao": {
             "sources":{
