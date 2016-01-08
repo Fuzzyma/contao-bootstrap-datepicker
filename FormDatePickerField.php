@@ -35,7 +35,7 @@ class FormDatepickerField extends FormTextField
      * @var string
      */
     protected $strTemplate = 'form_datepicker';
-    private $options = array();
+    public $options = array();
 
     public function __construct($arrAttributes = null)
     {
