@@ -30,6 +30,6 @@
 /**
  * Form fields
  */
-$GLOBALS['BE_FFL']['datepicker'] = 'FormDatepickerField';
+$GLOBALS['BE_FFL']['datepicker'] = 'DatepickerField';
 $GLOBALS['TL_FFL']['datepicker'] = 'FormDatepickerField';
 

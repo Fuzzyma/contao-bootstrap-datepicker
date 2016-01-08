@@ -17,6 +17,7 @@
 ClassLoader::addClasses(array
 (
 	'FormDatepickerField' => 'system/modules/bootstrap-datepicker/FormDatepickerField.php',
+	'DatepickerField' => 'system/modules/bootstrap-datepicker/DatepickerField.php',
 ));
 
 TemplateLoader::addFiles(array
