@@ -44,8 +44,6 @@ class FormDatepickerField extends FormTextField
 
         $this->evals = $arrAttributes;
 
-        $this->rgxp = 'date';
-
         if (!$this->dateExcludeCSS) {
             $GLOBALS['TL_CSS'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
         }

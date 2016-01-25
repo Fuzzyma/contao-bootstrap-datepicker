@@ -42,8 +42,6 @@ class DatepickerField extends \TextField
     
         parent::__construct($arrAttributes);
 
-        $this->rgxp = 'date';
-
         $GLOBALS['TL_CSS'][] = 'composer/vendor/eternicode/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
 
         array_unshift($GLOBALS['TL_JAVASCRIPT'], 'system/modules/bootstrap-datepicker/assets/jquery.noconflict.js');
